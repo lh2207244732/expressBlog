@@ -1,0 +1,33 @@
+.main {
+    height: 3000px;
+}
+.custom-carousel {
+    margin-bottom: 20px;
+}
+
+.custom-carousel .carousel-inner img {
+    width: 100%;
+    height: 400px;
+}
+
+#custom-page .pagination li a {
+    color: #999;
+}
+
+.main .col-md-4 .user-panel {
+    background-color: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.main .col-md-4 .user-panel div {
+    margin-bottom: 10px;
+}
+
+.main .col-md-4 .user-panel .btn {
+    width: 100%;
+}
+
+.main .col-md-4 .adv {
+    margin-bottom: 20px;
+}
