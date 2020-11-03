@@ -86,6 +86,7 @@ app.set('view engine', 'html')
     //路由入口 采用模块化处理（router）
 app.use('/', require('./routes/index'))
 app.use('/users', require('./routes/users'))
+app.use('/admins', require('./routes/admins'))
     //监听端口
 app.listen(3000, () => {
     console.log('server is running at "http://127.0.0.1:3000"')

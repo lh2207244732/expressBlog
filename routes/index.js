@@ -7,6 +7,7 @@ router.get('/', (req, res) => {
     //第二个参数是传递给模板的数据
     res.render('main/index', {
         // title: '我是标题'
+        userInfo: req.userInfo
     })
 })
 module.exports = router
