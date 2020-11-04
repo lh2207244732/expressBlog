@@ -4,7 +4,6 @@ const categorySchema = new mongoose.Schema({
     name: {
         type: String,
         requires: true,
-
     },
     order: {
         type: Number,
