@@ -16,10 +16,10 @@ router.use((req, res, next) => {
 })
 
 //显示分类管理首页
-router.get('/', async(req, res) => {
+router.get('/', async (req, res) => {
     const options = {
         page: req.query.page,
-        limit: 6,
+        limit: 3,
         sort: { order: 1 },
         model: Category
     }
@@ -31,12 +31,11 @@ router.get('/', async(req, res) => {
         page: result.page,
         pages: result.totalpages,
         url: '/categories'
-
     })
 })
 
 //渲染新增分类
-router.get('/add', async(req, res) => {
+router.get('/add', async (req, res) => {
     // res.render('admin/category_add.html', {
     //     userInfo: req.userInfo,
     // })
@@ -46,7 +45,7 @@ router.get('/add', async(req, res) => {
 })
 
 //处理新增分类请求
-router.post('/add', async(req, res) => {
+router.post('/add', async (req, res) => {
     //获取参数
     let { name, order } = req.body
     if (!order) {
@@ -65,7 +64,7 @@ router.post('/add', async(req, res) => {
         } else {
             //不存在则添加分类
             await Category.insertMany({ name, order })
-                //返回一个成功页面
+            //返回一个成功页面
             res.render('admin/success', {
                 userInfo: req.userInfo,
                 message: '添加成功',
@@ -84,15 +83,15 @@ router.post('/add', async(req, res) => {
 })
 
 //渲染编辑分类
-router.get('/edit/:id', async(req, res) => {
+router.get('/edit/:id', async (req, res) => {
     // 获取id
     const { id } = req.params
-        //根据Id查数据
+    //根据Id查数据
     const category = await Category.findById(id)
-        // res.render('admin/category_edit', {
-        //     userInfo: req.userInfo,
-        //     category: category
-        // })
+    // res.render('admin/category_edit', {
+    //     userInfo: req.userInfo,
+    //     category: category
+    // })
     res.render('admin/category_add_edit', {
         userInfo: req.userInfo,
         category: category
@@ -100,11 +99,11 @@ router.get('/edit/:id', async(req, res) => {
 })
 
 //处理编辑分类请求
-router.post('/edit', async(req, res) => {
+router.post('/edit', async (req, res) => {
     let { name, order, id } = req.body
     try {
         const category1 = await Category.findById(id)
-            //判断是否有更新
+        //判断是否有更新
         if (category1.name == name && category1.order == order) {
             return res.render('admin/error', {
                 userInfo: req.userInfo,
@@ -138,7 +137,7 @@ router.post('/edit', async(req, res) => {
 })
 
 //处理删除分类请求
-router.get('/delete/:id', async(req, res) => {
+router.get('/delete/:id', async (req, res) => {
     let { id } = req.params
     try {
         await Category.deleteOne({ _id: id })

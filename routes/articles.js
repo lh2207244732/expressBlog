@@ -16,15 +16,15 @@ router.use((req, res, next) => {
 })
 
 //显示文章管理首页
-router.get('/', async(req, res) => {
+router.get('/', async (req, res) => {
     const options = {
         page: req.query.page,
-        limit: 6,
+        limit: 3,
         sort: { order: 1 },
         model: Article
     }
     const result = await pagination(options)
-    res.render('admin/article', {
+    res.render('admin/article_list', {
         userInfo: req.userInfo,
         categories: result.docs,
         list: result.list,

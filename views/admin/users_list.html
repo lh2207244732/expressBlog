@@ -6,6 +6,7 @@
                 <th>用户ID</th>
                 <th>用户名</th>
                 <th>是否为管理员</th>
+                <th>操作</th>
             </tr>
         </thead>
         <tbody>
@@ -16,8 +17,12 @@
                 <td>
                     {% if user.isAdmin %} 是 {% else %} 否 {% endif %}
                 </td>
+                <td>
+                    <a href="/admins/delete/{{user._id.toString()}}" class="del">删除</a>
+                </td>
             </tr>
             {% endfor %}
+
         </tbody>
     </table>
 </div>
