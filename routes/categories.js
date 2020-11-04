@@ -1,4 +1,5 @@
 const express = require('express')
+const { render } = require('swig')
 const router = express.Router()
 const Category = require('../models/category')
 const pagination = require('../utils/pagination')
@@ -14,19 +15,25 @@ router.use((req, res, next) => {
 
 //显示分类管理首页
 router.get('/', async(req, res) => {
-    const options = {
-        page: req.query.page,
-        model: Category
-    }
-    const result = await pagination(options)
-    res.render('admin/category_list', {
-        userInfo: req.userInfo,
-        users: result.docs,
-        list: result.list,
-        page: result.page,
-        pages: result.totalpages,
-        url: '/category'
+        const options = {
+            page: req.query.page,
+            model: Category
+        }
+        const result = await pagination(options)
+        res.render('admin/category_list', {
+            userInfo: req.userInfo,
+            users: result.docs,
+            list: result.list,
+            page: result.page,
+            pages: result.totalpages,
+            url: '/category'
 
+        })
+    })
+    //处理新增
+router.get('/add', async(req, res) => {
+    res.render('admin/category_add.html', {
+        userInfo: req.userInfo,
     })
 })
 
