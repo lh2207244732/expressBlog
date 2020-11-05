@@ -5,3 +5,7 @@
 .content .table-responsive {
     min-height: 400px;
 }
+
+.ck-rounded-corners {
+    height: 500px;
+}

@@ -8,11 +8,15 @@ const articleSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    content: {
+        type: String,
+        default: ""
+    },
     author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     },
-    classify: {
+    category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'categories'
     },
