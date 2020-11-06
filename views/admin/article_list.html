@@ -18,9 +18,9 @@
             <tr>
                 <td>{{ article._id.toString() }}</td>
                 <td>{{ article.title }}</td>
-                <td>{{ article.author }}</td>
-                <td>{{ article.category }}</td>
-                <td>{{ article.createdAt }}</td>
+                <td>{{ article.author.userName }}</td>
+                <td>{{ article.category.name }}</td>
+                <td>{{ article.createTime }}</td>
                 <td>{{ article.click }}</td>
                 <td>
                     <a href="/detail/{{article._id.toString()}}">查看</a>

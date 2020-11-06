@@ -1,5 +1,7 @@
 //models/category.js mongodb的schema模型文件
+const moment = require('moment')
 const mongoose = require('mongoose')
+const pagination = require('../utils/pagination')
 const articleSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -7,7 +9,8 @@ const articleSchema = new mongoose.Schema({
     },
     category: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'categories',
+        //会自动关联到categories
+        ref: 'category',
     },
     introduction: {
         type: String,
@@ -19,20 +22,33 @@ const articleSchema = new mongoose.Schema({
     },
     author: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'users',
+        ref: 'user',
     },
     createdAt: {
         type: Date,
         default: Date.now
     },
     click: {
-        type: Number
+        type: Number,
+        default: 0
     }
 })
-//静态方法
-articleSchema.statics.findArticles = function (query) {
-    console.log(query)
-    return this.find(query).populate('author', 'userName')
-}
-const Article = mongoose.model('articles', articleSchema)
+
+//静态方法,关联查询
+articleSchema.statics.findPaginationArticles = function(req, query) {
+        const options = {
+            page: req.query.page,
+            projection: '-__v',
+            sort: { order: 1 },
+            model: this,
+            query: query,
+            populates: [{ path: 'author', select: 'userName' }, { path: 'category', select: 'name' }]
+        }
+        return pagination(options)
+    }
+    //定义虚拟字段
+articleSchema.virtual('createTime').get(function() {
+    return moment(this.createdAt).format('YYY-MM-DD HH:mm:ss')
+})
+const Article = mongoose.model('article', articleSchema)
 module.exports = Article
