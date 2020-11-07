@@ -7,8 +7,8 @@
     <title>{% block title %}{% endblock %}</title>
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./css/common.css">
-    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/index.css">
 </head>
 
 <body>
@@ -17,33 +17,36 @@
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">我的个人博客</a>
+                <a class="navbar-brand" href="/">我的个人博客</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+                    {% if currentCategory %}
+                    <li>
+                        {% else %}
                     <li class="active">
-                        <a href="./index.html">首页</a>
+                        {% endif %}
+                        <a href="/">首页</a>
                     </li>
+                    {% for category in categories %}
+                    {% if currentCategory==category._id.toString() %}
+                    <li class="active">
+                        {% else %}
                     <li>
-                        <a href="./list.html">HTML/CSS</a>
+                        {% endif %}
+
+                        <a href="/list/{{category._id.toString()}}">{{category.name}}</a>
                     </li>
-                    <li>
-                        <a href="./list.html">JavaScript</a>
-                    </li>
-                    <li>
-                        <a href="./list.html">学无止境</a>
-                    </li>
-                    <li>
-                        <a href="./list.html">我的足迹</a>
-                    </li>
+                    {% endfor %}
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -86,18 +89,21 @@
                             <div class="form-group">
                                 <label for="regInputPassword" class="col-sm-4 control-label">请输入密码</label>
                                 <div class="col-sm-6">
-                                    <input type="password" class="form-control" id="regInputPassword" placeholder="请输入密码">
+                                    <input type="password" class="form-control" id="regInputPassword"
+                                        placeholder="请输入密码">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="regInputRelPassword" class="col-sm-4 control-label">重复密码</label>
                                 <div class="col-sm-6">
-                                    <input type="password" class="form-control" id="regInputRelPassword" placeholder="请再次输入密码">
+                                    <input type="password" class="form-control" id="regInputRelPassword"
+                                        placeholder="请再次输入密码">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-offset-4 col-sm-6">
-                                    <button type="submit" class="btn btn-default btn-primary" id="sub-register">注册</button>
+                                    <button type="submit" class="btn btn-default btn-primary"
+                                        id="sub-register">注册</button>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -119,13 +125,15 @@
                             <div class="form-group">
                                 <label for="loginInputUsername" class="col-sm-4 control-label">用户名</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="loginInputUsername" placeholder="请输入用户名">
+                                    <input type="text" class="form-control" id="loginInputUsername"
+                                        placeholder="请输入用户名">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="loginInputPassword" class="col-sm-4 control-label">请输入密码</label>
                                 <div class="col-sm-6">
-                                    <input type="password" class="form-control" id="loginInputPassword" placeholder="请输入密码">
+                                    <input type="password" class="form-control" id="loginInputPassword"
+                                        placeholder="请输入密码">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -151,12 +159,12 @@
                     <div class="adv hidden-xs">
                         <div class="ad">
                             <a href="#" class="thumbnail">
-                                <img src="./images/carousel/s1.jpg" alt="">
+                                <img src="/images/carousel/s1.jpg" alt="">
                             </a>
                         </div>
                         <div class="ad">
                             <a href="#" class="thumbnail">
-                                <img src="./images/carousel/s2.jpg" alt="">
+                                <img src="/images/carousel/s2.jpg" alt="">
                             </a>
                         </div>
                     </div>
@@ -169,7 +177,7 @@
                             <div class="media">
                                 <div class="media-left media-middle">
                                     <a href="#">
-                                        <img class="media-object img-circle" src="./images/carousel/s1.jpg" alt="">
+                                        <img class="media-object img-circle" src="/images/carousel/s1.jpg" alt="">
                                     </a>
                                 </div>
                                 <div class="media-body">
@@ -186,34 +194,12 @@
                         </div>
                         <div class="panel-body">
                             <ul class="list-group">
+                                {% for article in topArticles %}
                                 <li class="list-group-item text-ellipsis">
-                                    <a href="#">Cras justo odioCras justo odioCras justo odioCras justo odioCras justo
-                                        odioCras justo odio</a>
+                                    <a href="/detail/{{article._id.toString()}}" target="_block">{{article.title}}
+                                        [{{article.click}}]</a>
                                 </li>
-                                <li class="list-group-item text-ellipsis">
-                                    <a href="#">Cras justo odioCras justo odioCras justo odioCras justo odioCras justo
-                                        odioCras justo odio</a>
-
-                                </li>
-                                <li class="list-group-item text-ellipsis">
-                                    <a href="#">Cras justo odioCras justo odioCras justo odioCras justo odioCras justo
-                                        odioCras justo odio</a>
-
-                                </li>
-                                <li class="list-group-item text-ellipsis">
-                                    <a href="#">Cras justo odioCras justo odioCras justo odioCras justo odioCras justo
-                                        odioCras justo odio</a>
-
-                                </li>
-                                <li class="list-group-item text-ellipsis">
-                                    <a href="#">Cras justo odioCras justo odioCras justo odioCras justo odioCras justo
-                                        odioCras justo odio</a>
-
-                                </li>
-                                <li class="list-group-item text-ellipsis">
-                                    <a href="#">Cras justo odioCras justo odioCras justo odioCras justo odioCras justo
-                                        odioCras justo odio</a>
-                                </li>
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>
@@ -223,7 +209,7 @@
                             <h3 class="panel-title">关注我</h3>
                         </div>
                         <div class="panel-body">
-                            <img src="./images/wechat.jpeg" alt="">
+                            <img src="/images/wechat.jpeg" alt="">
                         </div>
                     </div>
                 </div>
@@ -239,8 +225,8 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
-<script src="./js/common.js"></script>
-<script src="./js/logout.js"></script>
-<script src="./js/index.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/logout.js"></script>
+<script src="/js/index.js"></script>
 
 </html>
