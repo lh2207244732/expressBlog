@@ -38,7 +38,7 @@
         </h3>
     </div>
     <div class="panel-body">
-        {{article.content}}
+        {{article.introduction}}
     </div>
     <div class="panel-footer">
         <span class="glyphicon glyphicon-user"></span>
@@ -48,27 +48,44 @@
         <span class="glyphicon glyphicon-time"></span>
         <span class="text-muted footer-text">{{article.createTime}}</span>
         <span class="glyphicon glyphicon-eye-open"></span>
-        <span class="text-muted footer-text"><span class="view-num">1000</span>已阅读</span>
+        <span class="text-muted footer-text"><span class="view-num">{{article.click}}</span>已阅读</span>
     </div>
 </div>
 {% endfor %}
-<!-- 分页 -->
-<nav aria-label="Page navigation" id="custom-page">
+<!-- 分页处理 -->
+{% if pages>1 %}
+<nav aria-label="Page navigation" class="table-custom">
     <ul class="pagination">
-        <li>
-            <a href="#" aria-label="Previous">
+        {% if page==1 %}
+        <li class="disabled">
+            <a href="javascript:;" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
+        {% else %}
         <li>
-            <a href="#" aria-label="Next">
+            <a href="{{ url }}/?page={{ page-1 }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% endif %} {% for i in list %} {% if page==i %}
+        <li class="active"><a href="jsvascript:;">{{ i }}</a></li>
+        {% else %}
+        <li><a href="{{ url }}/?page={{ i }}">{{ i }}</a></li>
+        {% endif %} {% endfor %} {% if page==pages %}
+        <li class="disabled">
+            <a href="javascript:;" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>
+        {% else %}
+        <li>
+            <a href="{{ url }}/?page={{ page+1 }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% endif %}
     </ul>
-</nav>{% endblock %}
+</nav>
+{% endif %}
+{% endblock %}

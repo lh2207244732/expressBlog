@@ -169,6 +169,7 @@
                         </div>
                     </div>
                     <!-- 博主介绍 -->
+                    {% if userInfo._id %}
                     <div class="panel panel-default hidden-xs intro-panel custom-panel">
                         <div class="panel-heading">
                             <h3 class="panel-title">博主介绍</h3>
@@ -181,12 +182,13 @@
                                     </a>
                                 </div>
                                 <div class="media-body">
-                                    <h4 class="media-heading">Tom</h4>
+                                    <h4 class="media-heading">{{ userInfo.userName }}</h4>
                                     80后草根！07年入行。一直潜心研究web前端技术，一边工作一边积累经验，分享一些个人博客模板，以及SEO优化等心得。
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                     <!-- 点击排行 -->
                     <div class="panel panel-default hidden-xs custom-panel host-list-panel">
                         <div class="panel-heading">
@@ -203,6 +205,7 @@
                             </ul>
                         </div>
                     </div>
+                    {% if userInfo._id %}
                     <!-- 关注我 -->
                     <div class="panel panel-default  custom-panel qr-panel">
                         <div class="panel-heading">
@@ -212,6 +215,7 @@
                             <img src="/images/wechat.jpeg" alt="">
                         </div>
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
