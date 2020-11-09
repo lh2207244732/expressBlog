@@ -1,0 +1,29 @@
+<div id="article-wrap">
+    <!-- 热门文章列表 -->
+    {% for article in articles %}
+    <div class="panel panel-default custom-panel article-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <a href="/detail/{{article._id.toString()}}">{{article.title}}</a>
+            </h3>
+        </div>
+        <div class="panel-body">
+            {{article.introduction}}
+        </div>
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-user"></span>
+            <span class="text-muted footer-text">{{article.author.userName}}</span>
+            <span class="glyphicon glyphicon-th-list"></span>
+            <span class="text-muted footer-text">{{article.category.name}}</span>
+            <span class="glyphicon glyphicon-time"></span>
+            <span class="text-muted footer-text">{{article.createTime}}</span>
+            <span class="glyphicon glyphicon-eye-open"></span>
+            <span class="text-muted footer-text"><span class="view-num">{{article.click}}</span>已阅读</span>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% if pages>1 %}
+<nav aria-label="Page navigation" id="articles-page" data-id="{{currentCategory}}">
+    {% include './pagination.html' %}
+</nav>

@@ -10,7 +10,7 @@
  * populates
  */
 //返回的是promise 所以可以直接用await
-module.exports = async(options) => {
+module.exports = async (options) => {
     let { page, limit: limit = 2, query: query = {}, projection: projection = "", sort: sort = { _id: -1 }, model, populates } = options
     let list = []
 
@@ -19,10 +19,10 @@ module.exports = async(options) => {
     // console.log(req.userInfo._id)
     // console.log(author)
 
-    const userCount = await model.estimatedDocumentCount()
-        //获取并计算总页数
+    const userCount = await model.countDocuments(query)
+    //获取并计算总页数
     const totalpages = Math.ceil(userCount / limit)
-        //当没有内容时
+    //当没有内容时
     if (totalpages == 0) {
         return {
             docs: [],

@@ -12,6 +12,8 @@ const MongoStore = require("connect-mongo")(session)
 
 const mongoose = require('mongoose')
 
+mongoose.set('useFindAndModify', false);
+
 //实例化一个express对象
 const app = express()
 

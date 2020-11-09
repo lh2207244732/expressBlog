@@ -25,7 +25,9 @@ a:hover {
     background: transparent;
     color: #f65a8a;
 }
-
+#article-wrap{
+    min-height: 360px;
+}
 .main {
     margin-top: 70px;
 }
