@@ -39,7 +39,6 @@ articleSchema.statics.findPaginationArticles = function(req, query) {
         const options = {
             page: req.query.page,
             projection: '-__v',
-            sort: { order: 1 },
             model: this,
             query: query,
             populates: [{ path: 'author', select: 'userName' }, { path: 'category', select: 'name' }]
