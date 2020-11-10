@@ -201,6 +201,7 @@
         return html
     }
     var $commentsPage = $('#comment-page')
+    // 调用分页插件，点击分页，发送ajax请求
     $commentsPage.pagination({
         url: '/commentsList'
     })
