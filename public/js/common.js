@@ -130,7 +130,7 @@
         }
         return html
     }
-    function buildArticlePage(list, page, pages) {
+    function buildPaginationHtml(list, page, pages) {
         var html = ''
         if (page == 1) {
             html += `<li class="disabled">`
@@ -165,8 +165,7 @@
         }
         return html
     }
-    //分页处理
-
+    //文章列表分页处理
     var $articlesPage = $('#articles-page')
     $articlesPage.pagination({
         url: '/articlesList'
@@ -175,12 +174,46 @@
         //创建文章列表及渲染
         var articleHtml = buildarticlesList(data.articles)
         $('#article-wrap').html(articleHtml)
-        //创建分页列表及渲染
+        //创建分页
         if (data.pages <= 1) {
             $articlesPage.html('')
         } else {
-            var articlePageHtml = buildArticlePage(data.list, data.page, data.pages)
-            $articlesPage.find('.pagination').html(articlePageHtml)
+            var PaginationHtml = buildPaginationHtml(data.list, data.page, data.pages)
+            $articlesPage.find('.pagination').html(PaginationHtml)
+        }
+    })
+    //评论列表分页处理
+    function buildcommentsList(articles) {
+        var html = ''
+        for (var i = 0, len = articles.length; i < len; i++) {
+            html += `
+            <div class="col-md-12">
+        <div class="text-muted comment-item">
+            <p>${articles[i].content}</p>
+            <p>
+                <span>${articles[i].author.userName}</span> 发表于
+                <span>${articles[i].createTime}}</span>
+            </p>
+        </div>
+    </div>
+            `
+        }
+        return html
+    }
+    var $commentsPage = $('#comment-page')
+    $commentsPage.pagination({
+        url: '/commentsList'
+    })
+    $commentsPage.on('get-data', function (ev, data) {
+        //创建评论列表及渲染
+        var coomentHtml = buildcommentsList(data.docs)
+        $('#comment-wrap').html(coomentHtml)
+        //创建分页器
+        if (data.pages <= 1) {
+            $commentsPage.find('.pagination').html('')
+        } else {
+            var PaginationHtml = buildPaginationHtml(data.list, data.page, data.pages)
+            $commentsPage.find('.pagination').html(PaginationHtml)
         }
     })
 })(jQuery)

@@ -10,19 +10,18 @@
  * populates
  */
 //返回的是promise 所以可以直接用await
-module.exports = async(options) => {
+module.exports = async (options) => {
     let { page, limit: limit = 2, query: query = {}, projection: projection = "", sort: sort = { _id: -1 }, model, populates } = options
     let list = []
-    console.log(sort)
-        // const Article = require('../models/article')
-        // const author = await Article.findArticles({ _id: req.userInfo._id })
-        // console.log(req.userInfo._id)
-        // console.log(author)
+    // const Article = require('../models/article')
+    // const author = await Article.findArticles({ _id: req.userInfo._id })
+    // console.log(req.userInfo._id)
+    // console.log(author)
 
     const userCount = await model.countDocuments(query)
-        //获取并计算总页数
+    //获取并计算总页数
     const totalpages = Math.ceil(userCount / limit)
-        //当没有内容时
+    //当没有内容时
     if (totalpages == 0) {
         return {
             docs: [],
