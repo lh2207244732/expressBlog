@@ -35,18 +35,25 @@ const articleSchema = new mongoose.Schema({
 })
 
 //静态方法,关联查询
-articleSchema.statics.findPaginationArticles = function(req, query) {
-        const options = {
-            page: req.query.page,
-            projection: '-__v',
-            model: this,
-            query: query,
-            populates: [{ path: 'author', select: 'userName' }, { path: 'category', select: 'name' }]
-        }
-        return pagination(options)
+articleSchema.statics.findPaginationArticles = async function (req, query) {
+    const options = {
+        page: req.query.page,
+        projection: '-__v',
+        model: this,
+        query: query,
+        populates: [{ path: 'author', select: 'userName' }, { path: 'category', select: 'name' }]
     }
-    //定义虚拟字段
-articleSchema.virtual('createTime').get(function() {
+    const result = await pagination(options)
+    const docs = result.docs.map(item => {
+        const obj = JSON.parse(JSON.stringify(item))
+        obj.createTime = moment(item.createdAt).format('YYYY-MM-DD hh:mm:ss')
+        return obj
+    })
+    result.docs = docs
+    return result
+}
+//定义虚拟字段
+articleSchema.virtual('createTime').get(function () {
     return moment(this.createdAt).format('YYY-MM-DD HH:mm:ss')
 })
 const Article = mongoose.model('article', articleSchema)
