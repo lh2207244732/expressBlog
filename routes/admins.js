@@ -3,6 +3,7 @@ const express = require('express')
 const { get } = require('.')
 const router = express.Router()
 const User = require('../models/user')
+const Comment = require('../models/comment')
 const hmac = require('../utils/hmac')
 const pagination = require('../utils/pagination')
     //设置中间件管理访问权限
@@ -75,23 +76,54 @@ router.get('/password', async(req, res) => {
     })
     //处理修改密码请求
 router.post('/password', async(req, res) => {
-    const { password } = req.body
-    const userId = req.userInfo._id
+        const { password } = req.body
+        const userId = req.userInfo._id
+        try {
+            //修改密码
+            await User.updateOne({ _id: userId }, { passWord: hmac(password) })
+                //销毁session 退出登录
+            req.session.destroy()
+            res.render('admin/success', {
+                userInfo: req.userInfo,
+                message: '修改密码成功,请重新登录',
+                nextUrl: '/'
+            })
+        } catch (e) {
+            res.render('admin/success', {
+                userInfo: req.userInfo,
+                message: '修改密码失败，服务器原因',
+                nextUrl: '/admins/password'
+            })
+        }
+    })
+    //渲染评论管理界面
+router.get('/comments', async(req, res) => {
+        const result = await Comment.findPaginationComment(req)
+        res.render('admin/comment_list', {
+            userInfo: req.userInfo,
+            comments: result.docs,
+            list: result.list,
+            page: result.page,
+            pages: result.totalpages,
+            url: '/admins/comments'
+        })
+    })
+    //处理删除评论请求
+router.get('/comment/delete/:id', async(req, res) => {
+    // 获取评论请求
+    let { id } = req.params
     try {
-        //修改密码
-        await User.updateOne({ _id: userId }, { passWord: hmac(password) })
-            //销毁session 退出登录
-        req.session.destroy()
+        await Comment.deleteOne({ _id: id })
         res.render('admin/success', {
             userInfo: req.userInfo,
-            message: '修改密码成功,请重新登录',
-            nextUrl: '/'
+            message: '删除评论成功',
+            nextUrl: '/admins/comments'
         })
     } catch (e) {
-        res.render('admin/success', {
+        res.render('admin/error', {
             userInfo: req.userInfo,
-            message: '修改密码失败，服务器原因',
-            nextUrl: '/admins/password'
+            message: '删除评论失败，服务器原因',
+            nextUrl: '/admins/comments'
         })
     }
 })
