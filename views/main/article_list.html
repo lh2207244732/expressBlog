@@ -1,5 +1,5 @@
+<!-- 热门文章列表 -->
 <div id="article-wrap">
-    <!-- 热门文章列表 -->
     {% for article in articles %}
     <div class="panel panel-default custom-panel article-panel">
         <div class="panel-heading">
@@ -27,3 +27,4 @@
 <nav aria-label="Page navigation" id="articles-page" data-id="{{currentCategory}}">
     {% include './pagination.html' %}
 </nav>
+{% endif %}

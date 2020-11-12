@@ -18,16 +18,16 @@ module.exports = async (options) => {
     // const author = await Article.findArticles({ _id: req.userInfo._id })
     // console.log(req.userInfo._id)
     // console.log(author)
-    //获取数据总数
+    //获取当前条件下的数据总数
     const userCount = await model.countDocuments(query)
     //获取并计算总页数
-    const totalpages = Math.ceil(userCount / limit)
+    const pages = Math.ceil(userCount / limit)
     //当没有内容时
-    if (totalpages == 0) {
+    if (pages == 0) {
         return {
             docs: [],
             list: [],
-            totalpages: 0,
+            pages: 0,
             page: 0
         }
     }
@@ -41,13 +41,13 @@ module.exports = async (options) => {
     if (page < 1) {
         page = 1
     }
-    if (page > totalpages) {
-        page = totalpages
+    if (page > pages) {
+        page = pages
     }
 
     //计算需要跳过的数据数
     const skip = limit * (page - 1)
-    for (var i = 1; i <= totalpages; i++) {
+    for (var i = 1; i <= pages; i++) {
         list.push(i)
     }
     //关联查询处理
@@ -63,7 +63,7 @@ module.exports = async (options) => {
     return {
         docs,
         list,
-        totalpages,
+        pages,
         page
     }
 }

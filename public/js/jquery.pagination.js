@@ -1,19 +1,19 @@
 ;
-(function($) {
+(function ($) {
     $.fn.extend({
-        pagination: function(options) {
-            return this.each(function() {
+        pagination: function (options) {
+            return this.each(function () {
                 var $this = $(this)
-                $this.on('click', 'a', function() {
+                $this.on('click', 'a', function () {
                     //获取当前页码数
                     var currentPage = $this.find('li.active a').html()
                     currentPage = parseInt(currentPage)
                     var $elem = $(this)
                     var labelText = $elem.attr('aria-label')
-                        //需要请求的页码数
+                    //需要请求的页码数
                     var page = $elem.html()
-                        //判断
-                        //上一页
+                    //判断
+                    //上一页
                     if (labelText == 'Previous') {
                         // 如果当前页码是1则直接返回
                         if (currentPage == 1) {
@@ -25,7 +25,7 @@
                     if (labelText == 'Next') {
                         //获取最大页码数
                         var pages = $this.find('a').eq(-2).html()
-                            //如果当前页码为最大页码则直接返回
+                        //如果当前页码为最大页码则直接返回
                         if (currentPage == pages) {
                             return false
                         }
@@ -47,7 +47,7 @@
                         url: options.url,
                         data: data,
                         dataType: 'json',
-                        success: function(result) {
+                        success: function (result) {
                             if (result.code == 0) {
                                 $this.trigger('get-data', result.data)
                             }

@@ -7,7 +7,7 @@ const Category = require('../models/category')
 const pagination = require('../utils/pagination')
 const Comment = require('../models/comment')
 
-//设置中间件管理访问权限
+//设置中间件管理评论权限
 router.use((req, res, next) => {
     if (req.userInfo._id) {
         next()

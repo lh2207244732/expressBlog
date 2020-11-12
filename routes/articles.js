@@ -41,7 +41,7 @@ router.get('/', async (req, res) => {
         articles: result.docs,
         list: result.list,
         page: result.page,
-        pages: result.totalpages,
+        pages: result.pages,
         url: '/articles'
     })
 })

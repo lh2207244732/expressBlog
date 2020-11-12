@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
         categories: result.docs,
         list: result.list,
         page: result.page,
-        pages: result.totalpages,
+        pages: result.pages,
         url: '/categories'
     })
 })

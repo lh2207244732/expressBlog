@@ -214,7 +214,7 @@
         if (data.totalpages <= 1) {
             $commentsPage.find('.pagination').html('')
         } else {
-            var PaginationHtml = buildPaginationHtml(data.list, data.page, data.totalpages)
+            var PaginationHtml = buildPaginationHtml(data.list, data.page, data.pages)
             $commentsPage.find('.pagination').html(PaginationHtml)
         }
     })
